@@ -19,8 +19,8 @@ class _ListaTileState extends State<ListaTile> {
     return ListTile(
       title: Text('${widget.listaModel.item  }'),
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateItensScreen(
-            onChange: widget.onChange, listaModel: widget.listaModel)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateItemScreen(
+            listaModel: widget.listaModel)));
       },
       leading: Checkbox(
         value: widget.listaModel.comprado,
@@ -31,6 +31,33 @@ class _ListaTileState extends State<ListaTile> {
 
           });
         },
+      ),
+      trailing: IconButton(
+        onPressed: () async {
+
+          showDialog(context: context, builder: (context) {
+            return AlertDialog(
+              title: Text("Exclusão"),
+              content: Text("Deseja realmente excluir?"),
+              actions: [
+                TextButton(onPressed: () async {
+                  await ListaRepositorio.delete(widget.listaModel);
+
+
+
+                  Navigator.pop(context);
+                }, child: Text("Sim")),
+                TextButton(onPressed: () {
+                  Navigator.pop(context);
+                }, child: Text("Não"))
+              ],
+            );
+          },);
+        },
+        icon: Icon(
+          Icons.delete,
+          color: Colors.red,
+        ),
       ),
     );
   }
