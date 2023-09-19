@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:listadecompras/models/lista_models.dart';
 import 'package:listadecompras/repositories/lista_repository.dart';
-import 'package:listadecompras/screen/create_itens_screen.dart';
 import 'package:listadecompras/widget/edit_list_tile.dart';
 import 'package:listadecompras/widget/lista_tile.dart';
 
@@ -71,9 +70,16 @@ class _HomeScreenState extends State<HomeScreen> {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) =>
-                ListaTile(listaModel: snapshot.data![index], onChange: () {
-                  _edit(snapshot.data![index]);
-                },),
+                ListaTile(
+                  listaModel: snapshot.data![index],
+                  onEdit: () {
+                    _edit(snapshot.data![index]);
+                  },
+                  onDelete: (){
+                    setState(() {
+                    });
+                  },
+                ),
           );
         },
       ),
